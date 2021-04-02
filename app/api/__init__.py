@@ -22,7 +22,8 @@ routes = [
     APIRoute(f'{prefix}/alive', endpoint=alive, tags=['Status'], response_class=PlainTextResponse,
              response_description='Check Endpoint Status'),
 
-    APIRoute(f'{prefix}/auth/register', endpoint=register, tags=['Auth'], response_class=PlainTextResponse),
+    APIRoute(f'{prefix}/auth/register', endpoint=register, methods=['POST'], tags=['Auth'],
+             response_class=PlainTextResponse),
     APIRoute(f'{prefix}/auth/login', endpoint=login, tags=['Auth'], response_class=PlainTextResponse),
     APIRoute(f'{prefix}/auth/claim', endpoint=get_auth_payload_data, tags=['Auth'], response_class=PlainTextResponse),
 

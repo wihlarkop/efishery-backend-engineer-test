@@ -1,8 +1,8 @@
-import logging
 import os
 from functools import lru_cache
 
 from pydantic import BaseSettings
+from pydantic.fields import List
 
 
 class Settings(BaseSettings):
@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     PORT: int
     SECRET_KEY: str
     ENABLE_API_DOCS: bool
+
+    SUPER_USERS: List
 
     # uvicorn config
     RELOAD: bool

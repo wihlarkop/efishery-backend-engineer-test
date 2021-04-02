@@ -1,6 +1,13 @@
+import string
+import random
 import jwt
 
 from app.config import settings
+
+
+def get_password(size: int):
+    chars = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(chars) for _ in range(size))
 
 
 def decode_jwt(token: str, check_expiration: bool = True):
