@@ -1,8 +1,25 @@
-import string
+import datetime
 import random
+import string
 import jwt
 
 from app.config import settings
+
+
+def generate_access_token(phone: int, name: str, password: str, register_at: str, role: str = 'user'):
+    expiration = datetime.datetime.now() + datetime.timedelta(seconds=settings.AUTH_TOKEN_EXPIRATION)
+    payload = {
+        'phone': phone,
+        'name': name,
+        'password': password,
+        'register_at': register_at,
+        'role': role,
+        'exp': int(expiration.timestamp())
+    }
+
+    access_token = encode_jwt(payload)
+
+    return access_token
 
 
 def get_password(size: int):
@@ -17,7 +34,7 @@ def decode_jwt(token: str, check_expiration: bool = True):
 
 def encode_jwt(payload: dict):
     token = jwt.encode(payload, key=settings.SECRET_KEY)
-    return token.decode('utf-8')
+    return token
 
 
 def get_payload(token: str, check_expiration: bool = True, raise_error: bool = True):

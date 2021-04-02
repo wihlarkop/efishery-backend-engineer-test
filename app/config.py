@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     ENABLE_API_DOCS: bool
 
+    AUTH_TOKEN_EXPIRATION: int = 3 * 60 * 60
+
     SUPER_USERS: List
 
     # uvicorn config

@@ -24,8 +24,9 @@ routes = [
 
     APIRoute(f'{prefix}/auth/register', endpoint=register, methods=['POST'], tags=['Auth'],
              response_class=PlainTextResponse),
-    APIRoute(f'{prefix}/auth/login', endpoint=login, tags=['Auth'], response_class=PlainTextResponse),
-    APIRoute(f'{prefix}/auth/claim', endpoint=get_auth_payload_data, tags=['Auth'], response_class=PlainTextResponse),
+    APIRoute(f'{prefix}/auth/login', endpoint=login, methods=['POST'], tags=['Auth'], response_class=PlainTextResponse),
+    APIRoute(f'{prefix}/auth/claim', endpoint=get_auth_payload_data, tags=['Auth'], response_class=PlainTextResponse,
+             dependencies=[Depends(JWTBearer())]),
 
     APIRoute(f'{prefix}/fetch/list-price', endpoint=get_resource_list, tags=['Fetch'],
              response_class=PlainTextResponse),

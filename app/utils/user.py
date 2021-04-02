@@ -1,3 +1,4 @@
+import datetime
 import json
 
 
@@ -8,21 +9,23 @@ def check_user_status(phone: int):
 
     for item in user:
         if item.get('phone') == phone:
-            return phone
+            return item
         else:
             pass
 
     auth_db.close()
 
 
-def create_user(phone: int, name: str, password: str):
+def create_user(phone: int, name: str, password: str, register_at: datetime, role: str = 'admin'):
     with open('auth.json', 'r+') as auth_db:
         db = json.load(auth_db)
 
         user_data = {
-            "phone": phone,
-            "name": name,
-            "password": password
+            'phone': phone,
+            'name': name,
+            'password': password,
+            'created_at': str(register_at),
+            'role': role
         }
 
         db['user'].append(user_data)
