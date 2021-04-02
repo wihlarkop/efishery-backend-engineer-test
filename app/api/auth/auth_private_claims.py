@@ -1,9 +1,15 @@
+from fastapi import Request
 from app.utils.response import JsonResponse
-from app.utils.token import decode_jwt
+from app.utils.token import get_payload
 
 
-async def get_auth_payload_data():
-    try:
-        payload = decode_jwt(token=token, check_expiration=False)
-    except Exception:
-        return JsonResponse(message='Cannot Decode Token', code=400, success=False)
+async def get_auth_payload_data(request: Request):
+    authorization: str = request.headers.get('Authorization')
+
+    print(authorization)
+
+    token = authorization.replace('Bearer ', '')
+
+    data = get_payload(token)
+
+    return JsonResponse(data=data)
