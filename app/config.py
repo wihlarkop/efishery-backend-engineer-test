@@ -13,14 +13,12 @@ class Settings(BaseSettings):
 
     AUTH_TOKEN_EXPIRATION: int = 3 * 60 * 60
 
-    SUPER_USERS: List
-
     # uvicorn config
     RELOAD: bool
 
-    # database
-    DB: str
-    DB_POOL_RECYCLE: int = 3600
+    RESOURCE_URL: str
+    BASE_URL_CONVERTER: str
+    API_KEY_CONVERTER: str
 
     class Config:
         env_file = os.environ.get('ENV_FILE', '.env')

@@ -16,7 +16,7 @@ def check_user_status(phone: int):
     auth_db.close()
 
 
-def create_user(phone: int, name: str, password: str, register_at: datetime, role: str = 'admin'):
+def create_user(phone: int, name: str, password: str, register_at: datetime, role: str = 'user'):
     with open('auth.json', 'r+') as auth_db:
         db = json.load(auth_db)
 
