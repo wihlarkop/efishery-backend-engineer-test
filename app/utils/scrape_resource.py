@@ -3,6 +3,8 @@ from functools import lru_cache
 import requests
 
 from app.config import settings
+from app.utils.string import convert_datetime_timezone_to_datetime
+
 
 @lru_cache()
 def scrape_resource():
@@ -27,7 +29,7 @@ def scrape_resource():
                     'idr': item.get('price'),
                     'usd': int(item.get('price')) * USD
                 },
-                'tgl_parsed': item.get('tgl_parsed'),
+                'tgl_parsed': convert_datetime_timezone_to_datetime(item.get('tgl_parsed')),
                 'timestamp': item.get('timestamp')
             })
 

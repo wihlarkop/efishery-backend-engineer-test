@@ -2,7 +2,7 @@ import datetime
 
 from app.schema.user_auth import RegisterAccount
 from app.utils.response import JsonResponse
-from app.utils.string import convert_string_data_to_datetime
+from app.utils.string import convert_datetime_to_datetime
 from app.utils.token import get_password
 from app.utils.user import check_user_status, create_user
 
@@ -23,7 +23,7 @@ async def register(register: RegisterAccount):
         'name': register.name,
         'phone': register.phone,
         'password': password,
-        'register_at': convert_string_data_to_datetime(now_time),
+        'register_at': convert_datetime_to_datetime(now_time),
     }
 
     return JsonResponse(data=result, message='Successfully Register')

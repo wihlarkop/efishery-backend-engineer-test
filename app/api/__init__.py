@@ -30,7 +30,8 @@ routes = [
 
     APIRoute(f'{prefix}/fetch/list-price', endpoint=get_resource_list, tags=['Fetch'],
              response_class=PlainTextResponse, dependencies=[Depends(JWTBearer())]),
-    APIRoute(f'{prefix}/fetch/list', endpoint=get_resource_aggregate, tags=['Fetch'], response_class=PlainTextResponse),
+    APIRoute(f'{prefix}/fetch/list-aggregate', endpoint=get_resource_aggregate, tags=['Fetch'],
+             response_class=PlainTextResponse),
     APIRoute(f'{prefix}/fetch/claim', endpoint=fetch_get_payload_data, tags=['Fetch'],
              response_class=PlainTextResponse, dependencies=[Depends(JWTBearer())]),
 ]
