@@ -82,4 +82,5 @@ python main.py
 
 open http://localhost:your-port/api/v1/doc
 
-you need register first for to get everything data
+you need register first for to get everything data, if you want register for admin, you need open auth.json file then
+change your account role to "admin"
