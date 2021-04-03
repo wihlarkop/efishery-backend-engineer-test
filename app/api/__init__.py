@@ -25,13 +25,13 @@ routes = [
     APIRoute(f'{prefix}/auth/register', endpoint=register, methods=['POST'], tags=['Auth'],
              response_class=PlainTextResponse),
     APIRoute(f'{prefix}/auth/login', endpoint=login, methods=['POST'], tags=['Auth'], response_class=PlainTextResponse),
-    APIRoute(f'{prefix}/auth/claim', endpoint=auth_get_payload_data, tags=['Auth'], response_class=PlainTextResponse,
+    APIRoute(f'{prefix}/auth/payload', endpoint=auth_get_payload_data, tags=['Auth'], response_class=PlainTextResponse,
              dependencies=[Depends(JWTBearer())]),
 
     APIRoute(f'{prefix}/fetch/list-price', endpoint=get_resource_list, tags=['Fetch'],
              response_class=PlainTextResponse, dependencies=[Depends(JWTBearer())]),
     APIRoute(f'{prefix}/fetch/list-aggregate', endpoint=get_resource_aggregate, tags=['Fetch'],
              response_class=PlainTextResponse, dependencies=[Depends(JWTBearer())]),
-    APIRoute(f'{prefix}/fetch/claim', endpoint=fetch_get_payload_data, tags=['Fetch'],
+    APIRoute(f'{prefix}/fetch/payload', endpoint=fetch_get_payload_data, tags=['Fetch'],
              response_class=PlainTextResponse, dependencies=[Depends(JWTBearer())]),
 ]
