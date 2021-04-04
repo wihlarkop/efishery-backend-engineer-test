@@ -13,6 +13,8 @@ This code is for backend engineer test.
 
 ## Getting Started
 
+*Note fetch api aggregate not already finish
+
 Clone this project
 
 ```
@@ -88,6 +90,9 @@ change your account role to "admin"
 ## Diagram
 
 ### Context Diagram
-https://github.com/wihlarkop/backend-engineer-test
+
+![Context Diagram](https://raw.githubusercontent.com/wihlarkop/backend-engineer-test/main/context_diagram.jpg)
+
 ### Deployment Diagram
-https://github.com/wihlarkop/backend-engineer-test
+
+![Deployment Diagram](https://raw.githubusercontent.com/wihlarkop/backend-engineer-test/main/deployment_diagram.jpg)
