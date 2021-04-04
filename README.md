@@ -84,3 +84,10 @@ open http://localhost:your-port/api/v1/doc
 
 you need register first for to get everything data, if you want register for admin, you need open auth.json file then
 change your account role to "admin"
+
+## Diagram
+
+### Context Diagram
+https://github.com/wihlarkop/backend-engineer-test
+### Deployment Diagram
+https://github.com/wihlarkop/backend-engineer-test
