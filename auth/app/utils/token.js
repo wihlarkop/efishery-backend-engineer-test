@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 function get_password(size) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -8,6 +10,21 @@ function get_password(size) {
     return result;
 }
 
+function decode_jwt(token, check_expiration = true) {
+    return jwt.verify(token, process.env.SECRET_KEY, {algorithm: 'HS256'}, check_expiration);
+}
+
+function encode_jwt(payload) {
+    return jwt.sign(payload, process.env.SECRET_KEY, {algorithm: 'HS256'})
+}
+
+function get_payload(token, check_expiration = true, raise_error = true) {
+
+}
+
 module.exports = {
-    get_password
+    get_password,
+    decode_jwt,
+    encode_jwt,
+    get_payload
 }
