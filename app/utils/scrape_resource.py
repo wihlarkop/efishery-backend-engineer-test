@@ -34,3 +34,11 @@ def scrape_resource():
             })
 
     return result
+
+
+def get_area_provinsi(k):
+    x = k.get('area_provinsi', '')
+    if not x:
+        x = ''
+
+    return x
