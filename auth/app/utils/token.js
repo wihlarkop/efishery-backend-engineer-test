@@ -1,5 +1,21 @@
 const jwt = require('jsonwebtoken');
 
+const AUTH_TOKEN_EXPIRATION = 3 * 60 * 60
+
+
+function generate_access_token(phone, name, password, register_at, role) {
+    const expiration = Date.now() + AUTH_TOKEN_EXPIRATION
+    const payload = {
+        'phone': phone,
+        'name': name,
+        'password': password,
+        'register_at': register_at,
+        'role': role,
+        'exp': expiration.getTime()
+    }
+    return encode_jwt(payload)
+}
+
 function get_password(size) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -19,10 +35,19 @@ function encode_jwt(payload) {
 }
 
 function get_payload(token, check_expiration = true, raise_error = true) {
-
+    try {
+        return decode_jwt(token, check_expiration)
+    } catch (err) {
+        if (raise_error) {
+            throw err
+        }
+        return null
+    }
 }
 
+
 module.exports = {
+    generate_access_token,
     get_password,
     decode_jwt,
     encode_jwt,

@@ -6,7 +6,6 @@ from app.utils.user import check_user_status
 
 async def login(login: LoginAccount):
     user = check_user_status(login.phone)
-    print(user)
 
     if user is None:
         return JsonResponse(message='User does not exist', code=404)

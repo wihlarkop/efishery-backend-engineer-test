@@ -1,6 +1,8 @@
-const express = require("express");
-const router = express.Router();
+const {Router} = require('express');
 const AuthController = require('../api/authController');
+const AuthJWT = require('../utils/dependency')
+
+const router = Router();
 
 
 router.post("/register", AuthController.register);

@@ -1,38 +1,30 @@
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
+const bodyParser = require('body-parser')
 const app = express();
+const port = 3000
 
 const AuthRoutes = require('./app/routes/auth');
 
-
 require('dotenv').config()
 
-
-app.get('/', (req, res) => {
-    res.send("Alive");
-})
-
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 app.use(cors());
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-header', 'Origin, X-Requested-With,Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Credentials', true);
 
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-        return res.status(200).json({});
-    }
-    next();
-});
+
+app.get('/api/v1/auth/alive', (req, res) => res.json('alive'));
+app.use('/api/v1/auth', AuthRoutes);
+
 
 app.use((req, res, next) => {
     const error = new Error('Pages Not Found');
     error.status = 404;
     next(error);
 });
-
 app.use((error, req, res, next) => {
-    res.status(error.status || 500);
     res.json({
         error: {
             message: error.message
@@ -40,8 +32,6 @@ app.use((error, req, res, next) => {
     });
 });
 
-app.listen(process.env.PORT)
-
-app.use('/api/v1/auth', AuthRoutes);
-
-module.exports = app;
+app.listen(port, () => {
+    console.log(`Auth app running at http://localhost:${port}`)
+})
