@@ -1,6 +1,9 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser')
+const cors = require('cors');
+const path = require('path');
+
+
 const app = express();
 const port = 3000
 
@@ -13,11 +16,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(cors());
-
-
-app.get('/api/v1/auth/alive', (req, res) => res.json('alive'));
-app.use('/api/v1/auth', AuthRoutes);
-
+app.use('/api/v1/auth/', AuthRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Pages Not Found');
@@ -31,6 +30,7 @@ app.use((error, req, res, next) => {
         }
     });
 });
+
 
 app.listen(port, () => {
     console.log(`Auth app running at http://localhost:${port}`)

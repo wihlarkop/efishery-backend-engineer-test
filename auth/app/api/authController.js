@@ -1,74 +1,78 @@
 const token = require('../utils/token')
 const users = require('../utils/user')
-const response = require('../utils/response')
 
 
-exports.get_payload_data = (req, res) => {
+function get_payload_data(req, res) {
     const author = req.headers.authorization
 
-    const auth = author.replace('Bearer', '')
+    const data = token.get_payload(author)
 
-    const data = token.get_payload(auth)
-
-    return res.json(Response.JsonResponse(data))
+    return res.json(data)
 
 }
 
-exports.login = (req, res) => {
+function login(req, res) {
     const phone = req.body.phone
     const password = req.body.password
 
 
-    if (password === 0 || password == null || password.length === 0) {
-        response.JsonResponse(null, 'Please Check Your Data', 400, null,)
+    if (password == null || password.length === 0) {
+        res.json('Please Check Your Data')
     }
 
     if (phone === "" || phone == null || phone.length === 0) {
-        response.JsonResponse(null, 'Please Check Your Data', 400, null,)
+        res.json('Please Check Your Data')
     }
 
-    const user = users.check_user_status(phone)
+    const user_status = users.check_user_status(phone)
+
+    console.log(user_status)
 
 
-    // if (user === null) {
-    //     response.JsonResponse(null, 'User Does Not Exist', 200, null)
-    // }
-    //
-    // if (user.password !== password) {
-    //     response.JsonResponse(null, 'Invalid Password', 200, null)
-    //
-    // }
+    if (user_status === null) {
+        res.json('User Does Not Exist')
+    }
 
-    // const access_token = token.generate_access_token(user.phone, user.name, user.password, user.register_at, user.role)
-    //
-    // const result = {
-    //     'phone': user.phone,
-    //     'name': user.name,
-    //     'access_token': access_token
-    // }
-    //
-    // return res.json(Response.JsonResponse(result))
+    if (user_status.password !== password) {
+        res.json('Invalid Password')
+    }
+
+    const access_token = token.generate_access_token(user_status.phone,
+        user_status.name,
+        user_status.password,
+        user_status.register_at,
+        user_status.role
+    )
+
+    const result = {
+        'phone': user_status.phone,
+        'name': user_status.name,
+        'access_token': access_token
+    }
+
+    return res.json(result)
 }
 
-exports.register = (req, res) => {
+function register(req, res) {
     const phone = req.body.phone
     const name = req.body.name
     const now_time = Date.now()
 
+
     if (name === "" || name == null || name.length === 0) {
-        response.JsonResponse(null, 'Please Check Your Data', 400, null,)
+        res.json('Please Check Your Data')
     }
 
     if (phone === 0 || phone == null || phone.length === 0) {
-        response.JsonResponse(null, 'Please Check Your Data', 400, null,)
+        res.json('Please Check Your Data')
     }
 
     const user = users.check_user_status(phone)
 
     const password = token.get_password(4)
 
-    if (user !== null) {
-        response.JsonResponse(null, 'User Already Exist', 200, null)
+    if (user !== undefined) {
+        res.json('User Already Exist')
     } else {
         users.create_user(phone, name, password, now_time)
     }
@@ -80,5 +84,11 @@ exports.register = (req, res) => {
         'register_at': now_time
     }
 
-    return res.json(response.JsonResponse(result, 'Success Create User', 200))
+    return res.json(result)
+}
+
+module.exports = {
+    login,
+    register,
+    get_payload_data
 }

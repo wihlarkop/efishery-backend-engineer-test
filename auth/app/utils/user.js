@@ -1,5 +1,8 @@
 const fs = require('fs');
+const path = require('path')
 
+
+const json_file = path.join(__dirname, '../../../auth.json')
 
 function create_user(phone, name, password, register_at, role = 'user') {
     const user_data = {
@@ -10,7 +13,8 @@ function create_user(phone, name, password, register_at, role = 'user') {
         'role': role
     }
 
-    fs.readFile('../../../auth.json', 'utf8', function readFileCallback(err, data) {
+
+    fs.readFile(json_file, 'utf8', function readFileCallback(err, data) {
         if (err) {
             console.log(err);
         } else {
@@ -18,7 +22,7 @@ function create_user(phone, name, password, register_at, role = 'user') {
             const user = JSON.parse(data); //now it an object
             user.user.push(user_data); //add some data
             const json = JSON.stringify(user, null, 2); //convert it back to json
-            fs.writeFile('../../../auth.json', json, 'utf8', function (err, data) {
+            fs.writeFile(json_file, json, 'utf8', function (err, data) {
                 if (err) {
                     console.error(err);
                     return
@@ -33,23 +37,27 @@ function create_user(phone, name, password, register_at, role = 'user') {
 
 
 function check_user_status(phone) {
-    fs.readFile('../../../auth.json', 'utf8', function readFileCallback(err, data) {
+    var selectedItem = null;
+    fs.readFile(json_file, 'utf8', function readFileCallback(err, data) {
+        let selectedItem = null;
         if (err) {
-            console.log(err);
+            return null
         } else {
             const users = JSON.parse(data)
 
             users.user.forEach(function (item) {
                 if (item.phone === phone) {
-                    console.log(users.user)
-                    return users.user
-                } else {
-                    return null
+                    selectedItem = item
                 }
             })
         }
     })
+    return selectedItem;
 }
+
+
+console.log(check_user_status(123))
+
 
 module.exports = {
     check_user_status,

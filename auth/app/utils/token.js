@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const AUTH_TOKEN_EXPIRATION = 3 * 60 * 60
 
+const SECRET_KEY = 'backendengineer'
 
 function generate_access_token(phone, name, password, register_at, role) {
     const expiration = Date.now() + AUTH_TOKEN_EXPIRATION
@@ -27,16 +28,17 @@ function get_password(size) {
 }
 
 function decode_jwt(token, check_expiration = true) {
-    return jwt.verify(token, process.env.SECRET_KEY, {algorithm: 'HS256'}, check_expiration);
+    return jwt.verify(token, SECRET_KEY, {algorithm: 'HS256'}, check_expiration);
 }
 
+
 function encode_jwt(payload) {
-    return jwt.sign(payload, process.env.SECRET_KEY, {algorithm: 'HS256'})
+    return jwt.sign(payload, SECRET_KEY, {algorithm: 'HS256'})
 }
 
 function get_payload(token, check_expiration = true, raise_error = true) {
     try {
-        return decode_jwt(token, check_expiration)
+        return jwt.verify(token, SECRET_KEY, {algorithm: 'HS256'})
     } catch (err) {
         if (raise_error) {
             throw err
