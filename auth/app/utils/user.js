@@ -37,26 +37,16 @@ function create_user(phone, name, password, register_at, role = 'user') {
 
 
 function check_user_status(phone) {
-    var selectedItem = null;
-    fs.readFile(json_file, 'utf8', function readFileCallback(err, data) {
-        let selectedItem = null;
-        if (err) {
-            return null
-        } else {
-            const users = JSON.parse(data)
-
-            users.user.forEach(function (item) {
-                if (item.phone === phone) {
-                    selectedItem = item
-                }
-            })
+    const data = fs.readFileSync(json_file, 'utf8');
+    const JSONData = JSON.parse(data);
+    let selectedItem;
+    JSONData.user.forEach(function (item) {
+        if (item.phone === phone) {
+            selectedItem = item
         }
     })
     return selectedItem;
 }
-
-
-console.log(check_user_status(123))
 
 
 module.exports = {

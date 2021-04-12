@@ -26,8 +26,6 @@ function login(req, res) {
 
     const user_status = users.check_user_status(phone)
 
-    console.log(user_status)
-
 
     if (user_status === null) {
         res.json('User Does Not Exist')
@@ -72,7 +70,7 @@ function register(req, res) {
     const password = token.get_password(4)
 
     if (user !== undefined) {
-        res.json('User Already Exist')
+        res.status(409).json('User Already Exist')
     } else {
         users.create_user(phone, name, password, now_time)
     }

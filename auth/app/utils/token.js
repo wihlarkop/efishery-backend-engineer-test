@@ -12,7 +12,7 @@ function generate_access_token(phone, name, password, register_at, role) {
         'password': password,
         'register_at': register_at,
         'role': role,
-        'exp': expiration.getTime()
+        'exp': expiration
     }
     return encode_jwt(payload)
 }

@@ -124,10 +124,9 @@ npm start
 ```
 
 open one of the api:</br>
-http://localhost:port/api/v1/register</br>
-http://localhost:port/api/v1/login</br>
-http://localhost:port/api/v1/payload
-
+http://localhost:port/api/v1/auth/register</br>
+http://localhost:port/api/v1/auth/login</br>
+http://localhost:port/api/v1/auth/payload
 
 *Note: SECRET_KEY must be same for auth and fetch*
 
